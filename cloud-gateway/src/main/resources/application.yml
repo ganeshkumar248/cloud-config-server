@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: order-service
+                fallbackuri: forward:/orderFallBack
+        
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: payment-service
+                fallbackuri: forward:/paymentFallBack
+                
+        - id: product-service
+          uri: lb://PRODUCT-CATALOG-SERVICE
+          predicates:
+            - Path=/product/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: product-service
+                fallbackuri: forward:/productCatalogFallback
+                
+                
+        - id: inventory-service
+          uri: lb://INVENTORY-SERVICE
+          predicates:
+            - Path=/inventory/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: inventory-service
+                fallbackuri: forward:/inventoryFallback
+                
+
+server:
+  port: 8989
+
