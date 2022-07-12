@@ -17,3 +17,13 @@ microservice:
     endpoints:
       doPayment: 
         uri: http://localhost:8282/payment/doPayment
+
+  inventory-service:
+	endpoints:
+		endpoint:
+			uri: http://localhost:8686/inventory
+			
+  product-service:
+	  endpoints:
+	  	endpoint:
+		  	uri: http://localhost:8585/product
